@@ -1,3 +1,9 @@
+variable "allowed_ip_addr" {}
+
+variable "access_key_id" {}
+
+variable "secret_access_key" {}
+
 variable "aws_region" {
   default = "eu-central-1"
 }
@@ -22,10 +28,3 @@ variable "cidr_numeral_public" {
     "2" = "32"
   }
 }
-
-variable "my_ip_addr" {}
-
-variable "access_key_id" {}
-
-variable "secret_access_key" {}
-
