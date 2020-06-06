@@ -14,3 +14,16 @@ resource "aws_s3_bucket" "unicorn" {
     Name  = "s3-bucket-${var.tag_name}"
   }
 }
+
+resource "aws_s3_bucket_object" "test" {
+
+  bucket = aws_s3_bucket.unicorn.id
+  key = "website"
+
+  # provisioner invokes a process with a local excutable
+  # upload multi files in the website directory into s3 bucket using aws cli
+  provisioner "local-exec" {
+    command = "aws s3 cp website/ s3://${aws_s3_bucket.unicorn.id} --recursive"
+  }
+
+}
