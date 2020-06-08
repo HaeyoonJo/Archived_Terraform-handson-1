@@ -2,6 +2,10 @@
 
 resource "aws_cognito_user_pool" "pool" {
   name = "pool-test"
+
+  tags = {
+    Name  = "cognito-${var.tag_name}"
+  }
 }
 
 resource "aws_cognito_user_pool_client" "client" {
