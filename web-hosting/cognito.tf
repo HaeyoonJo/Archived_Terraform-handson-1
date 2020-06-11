@@ -1,7 +1,7 @@
 # cognito
 
 resource "aws_cognito_user_pool" "pool" {
-  name = "pool-test"
+  name    = "pool-test"
 
   tags = {
     Name  = "cognito-${var.tag_name}"
@@ -9,13 +9,11 @@ resource "aws_cognito_user_pool" "pool" {
 }
 
 resource "aws_cognito_user_pool_client" "client" {
-  name = "client-test"
+  name          = "client-test"
+  user_pool_id  = aws_cognito_user_pool.pool.id
 
-  user_pool_id = aws_cognito_user_pool.pool.id
-
-  # I think, It seems that values are given by default even if no value is specified
+  # It seems that values are given by default even if no value is specified
   # generate_secret, explicit_auth_flows are defaulted
   generate_secret = false
   explicit_auth_flows = ["ALLOW_CUSTOM_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
-
 }
