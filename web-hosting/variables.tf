@@ -4,6 +4,8 @@ variable "secret_access_key" {}
 
 variable "bucket_name" {}
 
+variable "accountId" {}
+
 variable "aws_region" {
   default = "eu-central-1"
 }

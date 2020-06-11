@@ -2,7 +2,7 @@
 
 resource "aws_cognito_user_pool" "pool" {
   name    = "pool-test"
-
+  auto_verified_attributes = ["email"]
   tags = {
     Name  = "cognito-${var.tag_name}"
   }
