@@ -27,12 +27,11 @@ $ docker exec -it tfserver /bin/bash
 
 Terraform은 Infrastructure as Code(IAC)를 기반으로 HashiCorp에서 제공하는 도구이다. 먼저, IAC를 이해해보자.
 
-##### IAC란?
-- AWS를 예를 들면, 콘솔과 같은 사용자 인터페이스에서 수동으로 구성 및 관리하는 프로세스와 인프라 구성값들을 지정된 파일형식에 맞춰 코드화하고 작성된 파일들로 특정 도구를 통해 인프라가 생성, 변경 및 관리되도록 한 개념으로서, 리소스들은 주어진 환경의 인프라, 즉 가상머신, 보안그룹, 네트워크 인터페이스 등이 포함된다.
-
+##### Infrastructure as Code(IAC)란?
+- AWS를 예를 들면, 콘솔과 같은 사용자 인터페이스에서 수동으로 구성 및 관리하는 프로세스와 인프라 구성값들을 지정된 파일형식에 맞춰 코드화하고 작성된 파일들로 특정 도구를 통해 인프라 리소스가 생성, 변경 및 관리되도록 한 개념으로서, 리소스들은 해당 인프라 내의 가상머신, 보안그룹, 네트워크 인터페이스등이 포함된다.
 
 - __IAC의 장점__
-( *일부 영어번역은 직역이 아닌, 내 생각을 녹여서 번역을 했다 )
+(*일부 영어번역은 직역이 아닌, 내 생각을 녹여서 번역을 했다)
     - __easily repeatable ( 반복가능한 코드 )__
     - __easily readable ( 가독 및 쉬운 이해 )__
     - __operational certainty with "terraform plan" ( terraform plan을 통해 예측가능한 운영확실성 )__
@@ -40,7 +39,7 @@ Terraform은 Infrastructure as Code(IAC)를 기반으로 HashiCorp에서 제공�
     - __quickly provisioned development environment ( 신속하게 프로비저닝되는 인프라 환경 )__
     - __disaster recovery ( 재해 발생시 빠른 복구 가능 )__
 
-    DevOps 도구들을 사용하다보면, 인프라에 대한 인식이 변화되면서 인프라 장애시 오류를 찾아 고치는 것이 아니라, 필요할 땐 쓰고 바로 버리는 추세와 Immutable infrastructure의 철학을 가진 개념이 많이 녹아있는데, IAC 또한 그러하다는 시각으로 바라보고 있다.
+    DevOps 도구들을 사용하다보면 인프라에 대한 인식이 변화되면서 인프라 장애시 전통적인 방법처럼 오류를 찾아 수정하는 것이 아니라 이전버전으로 롤백을 한다거나 배포방식 -Blue/green, canary-적용와 같이 필요할 땐 쓰고 바로 버리는 추세와 Immutable infrastructure를 추구하는데, IAC 또한 그러하다는 시각으로 바라보고 있다.
 
 ##### Terraform이란?
 
@@ -64,7 +63,7 @@ HashiCorp에서 정의한 Terraform 장점은 다음과 같다.
     [Providers 문서](https://www.terraform.io/docs/providers/index.html)를 보면, Providers로써 사용가능한 서비스 목록을 확인가능하다.
 
 - Resources
-    리소스 블록은 인프라를 정의한다. 블록이 뭘까? HashiCorp 공식문서를 읽어보면 리소스는 하나이상의 인프라 객체들을 명시한 블록이라고 했는데 아래의 VPC 블록과 같이 이해하면 된다.
+    리소스 블록은 인프라를 정의한다. 블록이 뭘까? HashiCorp 공식문서를 읽어보면 리소스는 하나이상의 인프라 객체들을 명시한 블록이라고 했는데 아래의 VPC 리소스 블록을 살펴보자.
     ```
     # vpc
     resource "aws_vpc" "default" {
@@ -76,9 +75,11 @@ HashiCorp에서 정의한 Terraform 장점은 다음과 같다.
       }
     }
     ```
-    2가지 요소로 정의가 가능한데 EC2 인스턴스와 같은 물리적 요소 또는 Heroku Application과 같은 논리적 요소가 포함된다.
-    리소스 블록에는 2가지 문자열; 자원유형( Resource Type )과 자원이름( Resource Name )로 생성, 수정 및 관리할 리소스를 정의할 수 있다.
-    리소스에 대한 인자( Argument )는 블록 내에 저장된다. 머신 크기, 이미지 종류, VPC ID와 같이 리소스 구성을 명시할 수 있다.
+    VPC 리소스 블록을 2가지 요소(resource type, resource name)로 정의를 하였다. 추가설명으로, 리소스 블록에서 EC2 인스턴스와 같은 물리적 요소 또는 Heroku Application과 같은 논리적 요소를 정의할 수 있다.
+
+    __자원유형( aws_vpc )__과 __자원이름( default )__를 명시했으며, 자원유형은 Terraform에서 지정한 유형을 사용해야 하고 자원이름은 자유롭게 네이밍이 가능하다. 이를 통해 VPC 생성, 수정 및 관리할 리소스를 정의하였다.
+
+    리소스에 대한 __인자( Argument )__는 블록 내에 저장된다. 위의 예시와 같이, CIDR_BLOCK 범위 지정, 테넌시 명시, 태그를 명시하거나 또는 EC2와 같이 머신 크기, 이미지 종류, VPC ID와 같이 리소스 구성을 명시할 수 있다. 해당 리소스 블록과 인자들에 대한 문서는 Terraform의 각 리소스 문서에 명시되어 있다.
 
 - Modules
 
@@ -91,3 +92,5 @@ HashiCorp에서 정의한 Terraform 장점은 다음과 같다.
 참고
 [inctoduction to HCL](https://www.linode.com/docs/applications/configuration-management/introduction-to-hcl/#:~:text=HCL%20is%20a%20configuration%20language,both%20human%20and%20machine%20friendly)
 [terraform practice](https://learn.hashicorp.com/terraform?track=getting-started#getting-started)
+
+https://www.terraform.io/docs/providers/metalcloud/guides/concepts.html
