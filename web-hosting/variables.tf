@@ -4,7 +4,9 @@ variable "secret_access_key" {}
 
 variable "bucket_name" {}
 
-variable "accountId" {}
+variable "account_id" {}
+
+variable "dynamodb_table_name" {}
 
 variable "aws_region" {
   default = "eu-central-1"
