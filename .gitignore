@@ -1,8 +1,0 @@
-.terraform
-*.tfstate
-*.tfstate.backup
-terraform.tfvars
-web-hosting/.terraform
-web-hosting/*.tfstate
-web-hosting/*.tfstate.backup
-web-hosting/terraform.tfvars
