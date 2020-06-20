@@ -1,3 +1,6 @@
+variable "iam_policy_dynamo_access" {}
+variable "iam_policy_lambda_excution" {}
+
 # create a role that accessable
 # to Lambda function and the dynamodb table specified
 # in the iam_role_policy_dynamodb.json file
@@ -12,7 +15,7 @@ resource "aws_iam_role" "tf-lambda" {
 
 # attach inline policy in order to attach created dynamodb my own
 resource "aws_iam_role_policy" "policy" {
-  name                    = "DynamoDBWriteAccess"
+  name                    = var.iam_policy_dynamo_access
   role                    = aws_iam_role.tf-lambda.name
   policy                  = file("policy_json/aws_iam_role_policy_dynamodb.json")
 }
@@ -20,7 +23,7 @@ resource "aws_iam_role_policy" "policy" {
 # attach AWSLambdaBasicExecutionRole policy in order to excute Lambda Function
 resource "aws_iam_role_policy_attachment" "test-attach" {
   role                    = aws_iam_role.tf-lambda.name
-  policy_arn              = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  policy_arn              = var.iam_policy_lambda_excution
 }
 
 
