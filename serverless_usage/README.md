@@ -13,3 +13,9 @@ terraforming serverless resources the following:
 - API Gateway
 
 - Dynamodb
+
+### Planned task
+
+1. Terraform backend ( 10th July )
+
+2. Terraform module ( 10th July )
