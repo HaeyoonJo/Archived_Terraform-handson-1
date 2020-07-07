@@ -3,4 +3,4 @@
 *.tfstate.backup
 terraform.tfvars
 website
-
+.DS_Store
